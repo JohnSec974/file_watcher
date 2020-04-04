@@ -8,7 +8,7 @@ struct Config {
 
 impl Config {
 	/// Initializes possibly instances from config file
-	fn new() {
+	fn new() -> Vec<Config> {
 
 	}
 }

@@ -10,7 +10,7 @@ struct EmailMedia {
 
 impl EmailMedia {
 	/// Initializes possibly instances from config file
-	fn new() {
+	fn new() -> Vec<EmailMedia> {
 		// TODO
 	}
 
