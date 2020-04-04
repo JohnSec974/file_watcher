@@ -20,15 +20,38 @@ struct EmailMedia {
 	subject_prefix: String
 }
 
+
 impl Config {
+	/// Initializes possibly instances from config file
 	fn new() {
 	
 	}
 }
 
+
 impl EmailMedia {
-	fn send() {
-	
+	/// Initializes possibly instances from config file
+	fn new() {
+		// TODO
 	}
+
+	/// Sends email using current information
+	fn send(&self) {
+		// TODO: how to do?
+	}
+}
+
+
+/// Reads contents from config file and returns as JSON
+fn read_config_file() {
+	// TODO: read contents from config file as string
+	// TODO: get JSON from contents
+}
+
+
+/// Writes message in stderr
+/// Writes message in /var/log/file_watcher.log for persistence
+fn write_error_log(message: &str) {
+	// TODO
 }
 
