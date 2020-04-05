@@ -28,4 +28,8 @@ pub fn read_config_file() -> json::JsonValue {
 /// Writes message in /var/log/file_watcher.log for persistence
 fn write_error_log(message: &str) {
 	eprintln!("{0}", message);
+
+    if let Err(e) = fs::write("/var/log/file_watcher.log", message) {
+        eprintln!("Can not write in log file: {0}", e);
+    };
 }
