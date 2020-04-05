@@ -1,4 +1,4 @@
 pub mod config;
 pub mod media;
 
-mod helper;
+pub mod helper;  // should be not public after tests
