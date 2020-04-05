@@ -1,3 +1,21 @@
 {
+  "configs": [
+    {
+      "config_name": "config_1",
+      "folder_path": "/var/log",
+      "file_name": "file_watcher.log",
+      "last_line": 0
+    }
+  ],
 
+  "medias": [
+    {
+      "address": "root@localhost",
+      "password": "p@s$w0rd",
+      "host": "localhost",
+      "port": 523,
+      "use_tls": false,
+      "subject_prefix": "[FILE WATCHER] "
+    }
+  ]
 }
