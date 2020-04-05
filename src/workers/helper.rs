@@ -1,14 +1,19 @@
+extern crate chrono;
+use chrono::{DateTime, Utc};
+
 use std::{fs, process};
 
 use json;
-
+use std::io::Write;
 
 
 /// Reads contents from config file and returns as JSON
 pub fn read_config_file() -> json::JsonValue {
     let contents = fs::read_to_string("config.json")
         .unwrap_or_else(|error| {
-            write_error_log("Can not read contents from config.json file");
+            let message = format!("Can not read contents from config.json file: {0}", error);
+            
+            write_error_log(&message);
             process::exit(1);
         }
     );
@@ -26,10 +31,31 @@ pub fn read_config_file() -> json::JsonValue {
 
 /// Writes message in stderr
 /// Writes message in /var/log/file_watcher.log for persistence
-fn write_error_log(message: &str) {
+pub fn write_error_log(message: &str) {
+    // format date and message
+    let now: DateTime<Utc> = Utc::now();
+    let now =  now.format("%Y-%m-%d %H:%M:%S");
+    let message = format!("[{0}] {1}\n", now, message);
+
+    // write to stderr
 	eprintln!("{0}", message);
 
-    if let Err(e) = fs::write("/var/log/file_watcher.log", message) {
-        eprintln!("Can not write in log file: {0}", e);
-    };
+    // prepare file
+    let file_name = "/var/log/file_watcher.log";
+    let file = fs::OpenOptions::new()
+        .append(true)
+        .open(file_name);
+
+    // write in file
+    match file {
+        Ok(mut file) => {
+            if let Err(e) = file.write(message.as_bytes()) {
+                eprintln!("Failed when trying to append data in file: {0}", e);
+            };
+        },
+
+        Err(e) => {
+            eprintln!("Failed to open file as append mode: {0}", e);
+        }
+    }
 }
